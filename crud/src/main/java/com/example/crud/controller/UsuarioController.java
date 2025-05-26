@@ -3,9 +3,11 @@ package com.example.crud.controller;
 import com.example.crud.model.Usuario;
 import com.example.crud.repository.UsuarioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/usuarios")
@@ -27,6 +29,16 @@ public class UsuarioController {
     @GetMapping("/{id}")
     public Usuario buscarPorId(@PathVariable Long id) {
         return usuarioRepository.findById(id).orElse(null);
+    }
+
+    @GetMapping("/{id}/eventos")
+    public ResponseEntity<?> listarEventosDoUsuario(@PathVariable Long id) {
+        Optional<Usuario> usuarioOptional = usuarioRepository.findById(id);
+        if (usuarioOptional.isEmpty()) {
+            return ResponseEntity.notFound().build();
+        }
+        Usuario usuario = usuarioOptional.get();
+        return ResponseEntity.ok(usuario.getEventos());
     }
 
     @PutMapping("/{id}")
