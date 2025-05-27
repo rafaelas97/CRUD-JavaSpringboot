@@ -24,18 +24,13 @@ public class EventoController {
     @Autowired
     private UsuarioRepository usuarioRepository;
 
-    @PostMapping(consumes = "application/json")
-    public Evento criarEvento(@RequestBody Evento evento) {
-        return eventoRepository.save(evento);
-    }
-
     @GetMapping
     public ResponseEntity<List<EventoDTO>> listarEventos() {
         List<Evento> eventos = eventoRepository.findAll();
         List<EventoDTO> eventoDTOs = eventos.stream().map(evento -> {
            
         List<UsuarioIdDTO> usuarioDTOs = evento.getUsuarios().stream().map(usuario -> {
-            return new UsuarioIdDTO(usuario.getId(), usuario.getNome()); 
+            return new UsuarioIdDTO(usuario.getId(), usuario.getNome(), usuario.getEmail()); 
         }).collect(Collectors.toList());
 
         return new EventoDTO(
@@ -48,6 +43,12 @@ public class EventoController {
     }).collect(Collectors.toList());
 
     return ResponseEntity.ok(eventoDTOs);
+    }
+
+    @PostMapping
+    public ResponseEntity<Evento> criarEvento(@RequestBody Evento evento) {
+    Evento novoEvento = eventoRepository.save(evento);
+    return ResponseEntity.status(HttpStatus.CREATED).body(novoEvento);
     }
 
     @PostMapping("/{id}/inscricao")

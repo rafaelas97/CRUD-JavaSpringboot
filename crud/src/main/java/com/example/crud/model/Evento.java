@@ -4,6 +4,8 @@ import jakarta.persistence.*;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 @Entity
@@ -17,8 +19,8 @@ public class Evento {
     private String data;
 
     @ManyToMany(mappedBy = "eventos")
-    @JsonManagedReference
-    private  List<Usuario> usuarios = new ArrayList<>();
+    @JsonIgnore  
+    private List<Usuario> usuarios = new ArrayList<>();
 
     public Long getId() {
         return id;

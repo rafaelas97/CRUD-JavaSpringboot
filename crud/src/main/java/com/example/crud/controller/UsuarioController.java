@@ -1,5 +1,6 @@
 package com.example.crud.controller;
 
+import com.example.crud.dto.UsuarioIdDTO;
 import com.example.crud.model.Usuario;
 import com.example.crud.repository.UsuarioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,7 +18,10 @@ public class UsuarioController {
     private UsuarioRepository usuarioRepository;
 
     @PostMapping
-    public Usuario criarUsuario(@RequestBody Usuario usuario) {
+    public Usuario criarUsuario(@RequestBody UsuarioIdDTO dto) {
+        Usuario usuario = new Usuario();
+        usuario.setNome(dto.getNome());
+        usuario.setEmail(dto.getEmail());
         return usuarioRepository.save(usuario);
     }
 

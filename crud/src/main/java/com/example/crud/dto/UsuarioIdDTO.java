@@ -3,10 +3,14 @@ package com.example.crud.dto;
 public class UsuarioIdDTO {
     private Long id;
     private String nome;
+    private String email;
 
-    public UsuarioIdDTO(Long id, String nome){
+    public UsuarioIdDTO() {}
+
+    public UsuarioIdDTO(Long id, String nome, String email){
         this.id = id;
         this.nome = nome;
+        this.email = email;
     }
 
     public Long getId(){
@@ -23,5 +27,13 @@ public class UsuarioIdDTO {
 
     public void setNome(String nome) {
         this.nome = nome;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 }
